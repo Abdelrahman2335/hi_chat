@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "370493672051",
-    "project_id": "hichat-5b37b",
-    "storage_bucket": "hichat-5b37b.firebasestorage.app"
+    "project_number": "934406621606",
+    "project_id": "e-commerce-app-669f8",
+    "storage_bucket": "e-commerce-app-669f8.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:370493672051:android:041fbecf98814cfee9b806",
+        "mobilesdk_app_id": "1:934406621606:android:15713cc2344c6f49e82767",
         "android_client_info": {
-          "package_name": "com.example.hi_chat"
+          "package_name": "com.example.ecommerce"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBjQChrKGibu3uXs3EqWLLIFlH8j_uElO4"
+          "current_key": "AIzaSyAI1jzqSnTZNhJgaE_Vn603XbSNsfBLzqM"
         }
       ],
       "services": {
