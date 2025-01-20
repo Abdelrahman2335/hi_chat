@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "370493672051",
+    "project_id": "hichat-5b37b",
+    "storage_bucket": "hichat-5b37b.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:370493672051:android:041fbecf98814cfee9b806",
+        "android_client_info": {
+          "package_name": "com.example.hi_chat"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBjQChrKGibu3uXs3EqWLLIFlH8j_uElO4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
