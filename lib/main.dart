@@ -11,6 +11,7 @@ void main() async {
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
+    name: "e-commerce-app-669f8",
   );
   runApp(const MyApp());
 }

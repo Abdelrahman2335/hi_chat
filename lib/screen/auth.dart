@@ -25,7 +25,7 @@ class _AuthScreenState extends State<AuthScreen> {
     final valid = formKey.currentState!.validate();
     try {
       isUpLoading = true;
-      if (!valid || (!isLogin && _selectedImage == null)) {
+      if (!valid && (!isLogin && _selectedImage == null)) {
         /// This mean Go Back
         return;
       } else {
@@ -81,7 +81,8 @@ class _AuthScreenState extends State<AuthScreen> {
             ),
             Card(
               margin: const EdgeInsets.all(20),
-              child: SingleChildScrollView(
+              /// using Expanded here is essential because, this widget will be scrollable, [Don't use SingleChildScrollView]
+              child: Expanded(
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Form(
@@ -91,6 +92,7 @@ class _AuthScreenState extends State<AuthScreen> {
                         if (!isLogin)
                           UserImagePicker(
                             onSelectedImage: (File pickedImage) {
+
                               _selectedImage = pickedImage;
                             },
                           ),
