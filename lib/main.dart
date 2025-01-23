@@ -14,6 +14,8 @@ void main() async {
     name: "e-commerce-app-669f8",
   );
   runApp(const MyApp());
+
+
 }
 
 class MyApp extends StatelessWidget {
