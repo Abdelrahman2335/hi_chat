@@ -1,21 +1,45 @@
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:hi_chat/screen/auth.dart';
 import 'package:hi_chat/screen/chat.dart';
-import 'firebase_options.dart';
 
 void main() async {
   /// Important to know that we add this line because we are using async in the main function.
   WidgetsFlutterBinding.ensureInitialized();
 
+  // if (!Platform.isAndroid && !Platform.isIOS && !Platform.isWindows) {
+  //   await Firebase.initializeApp(
+  //     options: FirebaseOptions(
+  //         apiKey: "AIzaSyBRK8sFTf60JXgf7bZCuqfgZK0eaJJsHcQ",
+  //         authDomain: "e-commerce-app-669f8.firebaseapp.com",
+  //         projectId: "e-commerce-app-669f8",
+  //         storageBucket: "e-commerce-app-669f8.appspot.com",
+  //         messagingSenderId: "934406621606",
+  //         appId: "1:934406621606:web:2e35911a1485cfd6e82767"),
+  //     // name: "e-commerce-app-669f8",
+  //   );
+  //   log("First option");
+  // } else {
+  //   await Firebase.initializeApp(
+  //     options: DefaultFirebaseOptions.currentPlatform,
+  //     name: "e-commerce-app-669f8",
+  
+  //   );
+  //   log("Second opthin");
+  // }
   await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-    name: "e-commerce-app-669f8",
-  );
+      options: FirebaseOptions(
+          apiKey: "AIzaSyBRK8sFTf60JXgf7bZCuqfgZK0eaJJsHcQ",
+          authDomain: "e-commerce-app-669f8.firebaseapp.com",
+          projectId: "e-commerce-app-669f8",
+          storageBucket: "e-commerce-app-669f8.appspot.com",
+          messagingSenderId: "934406621606",
+          appId: "1:934406621606:web:2e35911a1485cfd6e82767"),
+      // name: "e-commerce-app-669f8",
+    );
   runApp(const MyApp());
-
-
 }
 
 class MyApp extends StatelessWidget {
