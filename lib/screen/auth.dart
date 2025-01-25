@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:typed_data';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -17,10 +18,18 @@ class _AuthScreenState extends State<AuthScreen> {
   final firebase = FirebaseAuth.instance;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   bool isLogin = true;
+  String newUsername = "";
   TextEditingController emailCon = TextEditingController();
   TextEditingController passCon = TextEditingController();
   Uint8List? _selectedImage;
   bool isUpLoading = false;
+
+  @override
+  void dispose() {
+    super.dispose();
+    emailCon.dispose();
+    passCon.dispose();
+  }
 
   void submit() async {
     final valid = formKey.currentState!.validate();
@@ -39,6 +48,9 @@ class _AuthScreenState extends State<AuthScreen> {
               await firebase.signInWithEmailAndPassword(
                   email: emailCon.text, password: passCon.text);
         } else {
+          // Write save here is very important as we have to save all the data first after validate it.
+          formKey.currentState!.save();
+
           final UserCredential userCredential =
               await firebase.createUserWithEmailAndPassword(
                   email: emailCon.text, password: passCon.text);
@@ -52,7 +64,17 @@ class _AuthScreenState extends State<AuthScreen> {
           // putData: Use this method to upload fixed sized data as a [Uint8List].
           await storageRef.putData(_selectedImage!);
 
-          // final imageUrl = await storageRef.getDownloadURL();
+          final imageUrl = await storageRef.getDownloadURL();
+
+          /// Here we are sending user data to the FirebaseFirestore
+          await FirebaseFirestore.instance
+              .collection("user")
+              .doc(userCredential.user!.uid)
+              .set({
+            "username": newUsername,
+            "Email": emailCon.text,
+            "profile_image": imageUrl,
+          });
         }
       }
     } on FirebaseAuthException catch (error) {
@@ -71,8 +93,6 @@ class _AuthScreenState extends State<AuthScreen> {
     } catch (error) {
       log(error.toString());
     }
-
-    formKey.currentState!.save();
   }
 
   @override
@@ -132,6 +152,25 @@ class _AuthScreenState extends State<AuthScreen> {
 
                         /// this makes the first letter is Capital
                       ),
+                      if (!isLogin)
+                        TextFormField(
+                          decoration:
+                              const InputDecoration(labelText: "User Name"),
+                          validator: (value) {
+                            if (value == null || value.trim().length < 2) {
+                              return "Plesae enter a valid name";
+                            }
+                            return null;
+                          },
+                          autocorrect: false,
+                          onSaved: (value) => newUsername = value!,
+
+                          /// this correct errors to the user
+
+                          textCapitalization: TextCapitalization.none,
+
+                          /// this makes the first letter is Capital
+                        ),
                       const SizedBox(
                         height: 9,
                       ),
