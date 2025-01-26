@@ -58,12 +58,18 @@ class _AuthScreenState extends State<AuthScreen> {
           final Reference storageRef = FirebaseStorage.instance
               .ref()
               .child("user_images")
-              .child(userCredential.user!.uid);
+              .child("${userCredential.user!.uid}.jpg");
 
           // Uploading Image.
           // putData: Use this method to upload fixed sized data as a [Uint8List].
-          await storageRef.putData(_selectedImage!);
 
+          // await storageRef.putData(_selectedImage!); // This putData cases a lot of troubles,
+          // it telling the firebase to see the image as binary file!!
+
+          SettableMetadata metadata = SettableMetadata(
+              contentType:
+                  "image/jpeg"); // just making sure about the type we need.
+          await storageRef.putData(_selectedImage!, metadata);
           final imageUrl = await storageRef.getDownloadURL();
 
           /// Here we are sending user data to the FirebaseFirestore
@@ -75,6 +81,7 @@ class _AuthScreenState extends State<AuthScreen> {
             "Email": emailCon.text,
             "profile_image": imageUrl,
           });
+          log(imageUrl);
         }
       }
     } on FirebaseAuthException catch (error) {

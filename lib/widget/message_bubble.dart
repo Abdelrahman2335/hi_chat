@@ -57,21 +57,26 @@ class _MessageBubbleState extends State<MessageBubble> {
       try {
         // Converts a string [widget.userImage] into a Uri object.
 
-        final response = await http.get(
-          Uri.parse(widget.userImage!),
-        );
+        log("This is the user image: ${widget.userImage}");
+        final uri = Uri.parse(widget.userImage!);
+        log("This is the response: $uri");
+
+        http.Response response = await http.get(uri);
+
+        log("The response is: $response");
+
         if (response.statusCode == 200) {
           setState(() {
             _imageBytes = response.bodyBytes;
           });
-          log("We good the data!");
+          log("We got the data!");
         } else {
           log("Faild to get the data. Status ${response.statusCode}");
         }
       } catch (error) {
         log("Catched Error: $error");
       }
-    }else{
+    } else {
       return;
     }
   }
@@ -88,9 +93,9 @@ class _MessageBubbleState extends State<MessageBubble> {
             // Align user image to the right, if the message is from me.
             right: widget.isMe ? 0 : null,
             child: CircleAvatar(
-              backgroundImage: _imageBytes == null
-                  ? MemoryImage(
-                      _imageBytes!,
+              backgroundImage: _imageBytes != null && _imageBytes!.isNotEmpty
+                  ? NetworkImage(
+                      "$_imageBytes.jpg",
                     )
                   : null,
               backgroundColor: theme.colorScheme.onPrimary.withAlpha(180),

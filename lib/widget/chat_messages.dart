@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -17,7 +16,7 @@ class ChatMessages extends StatelessWidget {
             .collection("chat")
             .orderBy("createdAt",
                 descending:
-                    true) // we are showing the messages by data using this code.
+                    true) // we are showing the messages by dat using this code.
             .snapshots(),
         builder: (ctx, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -45,7 +44,7 @@ class ChatMessages extends StatelessWidget {
 
               final currentMessageUserId = chatMessage["userId"];
               final nextMessageUserId =
-                  nextMessage != null ? chatMessage["userId"] : null;
+                  nextMessage != null ? nextMessage["userId"] : null;
 
               bool nextUserIsSame = currentMessageUserId == nextMessageUserId;
 
@@ -54,14 +53,12 @@ class ChatMessages extends StatelessWidget {
                     message: nextMessage!["message"],
                     isMe: authUser.uid == currentMessageUserId);
               } else {
-                MessageBubble.first(
+                return MessageBubble.first(
                     userImage: chatMessage["profile_image"],
                     username: chatMessage["username"],
                     message: chatMessage["message"],
                     isMe: authUser.uid == currentMessageUserId);
-                log(chatMessage["profile_image"]);
               }
-              return null;
             },
           );
         },
